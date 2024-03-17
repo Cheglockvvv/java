@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface FileSystemComponent {
     String getName();
-    void display();
+    void display(int depth);
 }

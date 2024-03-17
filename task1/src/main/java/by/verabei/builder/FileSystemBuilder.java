@@ -4,25 +4,36 @@ import by.verabei.filesystem.File;
 import by.verabei.filesystem.FileSystemComponent;
 import by.verabei.filesystem.Folder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FileSystemBuilder {
     public static FileSystemComponent buildFileSystem(String input, Folder root) {
         List<String> components = new ArrayList<>(List.of(input.split("/")));
         Folder currentFolder = root;
 
-        for (String component : components) {
-            if (!component.isEmpty()
-                    && currentFolder.getContent().stream()
-                    .anyMatch(component1 -> Objects.equals(component1.getName(), component))) {
-                if (component.contains(".")) {
-                    currentFolder.addComponent(new File(component));
+        for (int i = 1; i < components.size(); i++) {
+            String componentName = components.get(i);
+            if (componentName.isEmpty()) {
+                continue;
+            }
+
+             if (currentFolder.getContent().stream()
+                    .noneMatch(component1 -> componentName.equals(component1.getName()))) {
+                if (componentName.contains(".")) {
+                    currentFolder.addComponent(new File(componentName));
                 } else {
-                    Folder folder = new Folder(component);
+                    Folder folder = new Folder(componentName);
                     currentFolder.addComponent(folder);
                     currentFolder = folder;
+                }
+            } else {
+                if (!componentName.contains(".")) {
+                    Optional<FileSystemComponent> similarFolderOpt = currentFolder.getContent().stream()
+                            .filter(component1 -> component1.getName().equals(componentName))
+                            .findFirst();
+                    if (similarFolderOpt.isPresent()) {
+                        currentFolder = (Folder) similarFolderOpt.get();
+                    }
                 }
             }
         }

@@ -15,11 +15,12 @@ public class TestConsoleOutput {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         String input = "root/folder1/folder2/file.txt";
-        FileSystemComponent root = FileSystemBuilder.buildFileSystem(input);
+        Folder root = new Folder("root");
+        FileSystemComponent madeRoot = FileSystemBuilder.buildFileSystem(input, root);
 
         try {
             System.setOut(new PrintStream(outputStream));
-            root.display();
+            madeRoot.display();
 
             String consoleOutput = outputStream.toString().trim();
             String expectedOutput = "root/\n\tfolder1/\n\tfolder2/\n\tfile.txt";

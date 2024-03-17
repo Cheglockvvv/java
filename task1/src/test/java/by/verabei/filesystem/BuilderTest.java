@@ -8,10 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BuilderTest {
     @Test
     public void testBuildFileSystem() {
+        Folder root = new Folder("root");
         String input = "root/folder1/file.txt";
-        FileSystemComponent root = FileSystemBuilder.buildFileSystem("root/folder1/folder2/file.txt");
+        FileSystemComponent madeRoot = FileSystemBuilder.buildFileSystem("root/folder1/folder2/file.txt", root);
 
-        Folder rootFolder = (Folder) root;
+        Folder rootFolder = (Folder) madeRoot;
         assertEquals(rootFolder.getContent().size(), 1);
         assertEquals(rootFolder.getName(), "root");
 

@@ -16,7 +16,7 @@ public class File implements FileSystemComponent {
     }
 
     @Override
-    public void display() {
-        System.out.println(name);
+    public void display(int depth) {
+        System.out.println("  ".repeat(depth) + name);
     }
 }

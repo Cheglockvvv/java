@@ -23,9 +23,10 @@ public class Folder implements FileSystemComponent {
     }
 
     @Override
-    public void display() {
-        System.out.println(name + "/");
-        content.forEach(FileSystemComponent::display);
+    public void display(int depth) {
+        String tabs = "  ".repeat(depth);
+        System.out.println(tabs + name + "/");
+        content.forEach(component -> component.display(depth + 1));
     }
 
     public List<FileSystemComponent> getContent() {
