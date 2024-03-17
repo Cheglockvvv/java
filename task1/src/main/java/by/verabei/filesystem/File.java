@@ -1,10 +1,12 @@
 package by.verabei.filesystem;
 
-public class File implements FileComponent {
+import java.util.List;
+
+public class File implements FileSystemComponent {
 
     private String name;
 
-    File (String name) {
+    public File (String name) {
         this.name = name;
     }
 
@@ -14,12 +16,7 @@ public class File implements FileComponent {
     }
 
     @Override
-    public boolean isFile() {
-        return true;
-    }
-
-    @Override
-    public boolean isDir() {
-        return false;
+    public void display() {
+        System.out.println(name);
     }
 }
