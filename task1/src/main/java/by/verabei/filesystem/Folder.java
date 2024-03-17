@@ -13,6 +13,11 @@ public class Folder implements FileSystemComponent {
         content = new ArrayList<>();
     }
 
+    public Folder(Folder folder) {
+        this.name = folder.name;
+        this.content = new ArrayList<>(folder.content);
+    }
+
     public void addComponent(FileSystemComponent component) {
         content.add(component);
     }
