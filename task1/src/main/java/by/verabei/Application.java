@@ -21,7 +21,11 @@ public class Application {
             } else if (line.equals("print")) {
                 rootFolder.display(0);
             } else {
-                FileSystemBuilder.buildFileSystem(line, rootFolder);
+                try {
+                    FileSystemBuilder.buildFileSystem(line, rootFolder);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Input line is invalid, try again");
+                }
             }
         }
     }

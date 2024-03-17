@@ -10,7 +10,7 @@ public class FileSystemBuilder {
     public static FileSystemComponent buildFileSystem(String input, Folder root) {
         List<String> components = new ArrayList<>(List.of(input.split("/")));
         Folder changingFolder = new Folder(root);
-        Folder currentFolder = root;
+        Folder currentFolder = changingFolder;
 
         for (int i = 1; i < components.size(); i++) {
             String componentName = components.get(i);
@@ -23,7 +23,7 @@ public class FileSystemBuilder {
                 if (componentName.contains(".")) {
                     currentFolder.addComponent(new File(componentName));
                     if (i != components.size() - 1) {
-                        throw Ill
+                        throw new IllegalArgumentException();
                     }
                 } else {
                     Folder folder = new Folder(componentName);
@@ -42,6 +42,7 @@ public class FileSystemBuilder {
             }
         }
 
+        root = changingFolder;
         return root;
     }
 }
