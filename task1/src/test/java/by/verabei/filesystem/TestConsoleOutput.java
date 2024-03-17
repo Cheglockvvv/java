@@ -23,7 +23,7 @@ public class TestConsoleOutput {
             madeRoot.display(0);
 
             String consoleOutput = outputStream.toString().trim();
-            String expectedOutput = "root/\n\tfolder1/\n\tfolder2/\n\tfile.txt";
+            String expectedOutput = "root/\n  folder1/\n    folder2/\n      file.txt";
 
             assertEquals(consoleOutput, expectedOutput);
         } finally {
