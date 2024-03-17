@@ -7,10 +7,14 @@ import by.verabei.filesystem.Folder;
 import java.util.*;
 
 public class FileSystemBuilder {
-    public static FileSystemComponent buildFileSystem(String input, Folder root) {
+    public static FileSystemComponent buildFileSystem(String input, Folder root) throws IllegalArgumentException {
         List<String> components = new ArrayList<>(List.of(input.split("/")));
         Folder saveRootFolder = new Folder(root);
         Folder currentFolder = root;
+
+        if (!components.get(0).equals("root")) {
+            throw new IllegalArgumentException();
+        }
 
         for (int i = 1; i < components.size(); i++) {
             String componentName = components.get(i);
