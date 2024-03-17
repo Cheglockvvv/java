@@ -12,7 +12,7 @@ public class File implements FileSystemComponent {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override

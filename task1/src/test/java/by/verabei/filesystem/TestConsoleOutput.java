@@ -20,7 +20,7 @@ public class TestConsoleOutput {
 
         try {
             System.setOut(new PrintStream(outputStream));
-            madeRoot.display();
+            madeRoot.display(0);
 
             String consoleOutput = outputStream.toString().trim();
             String expectedOutput = "root/\n\tfolder1/\n\tfolder2/\n\tfile.txt";
