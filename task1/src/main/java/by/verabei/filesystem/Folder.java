@@ -6,15 +6,15 @@ import java.util.List;
 public class Folder implements FileSystemComponent {
 
     private String name;
-    private List<FileSystemComponent> contents;
+    private List<FileSystemComponent> content;
 
     public Folder(String name) {
         this.name = name;
-        contents = new ArrayList<>();
+        content = new ArrayList<>();
     }
 
-    public boolean addComponent(FileSystemComponent component) {
-        contents.add(component);
+    public void addComponent(FileSystemComponent component) {
+        content.add(component);
     }
 
     @Override
@@ -25,6 +25,10 @@ public class Folder implements FileSystemComponent {
     @Override
     public void display() {
         System.out.println(name + "/");
-        contents.forEach(FileSystemComponent::display);
+        content.forEach(FileSystemComponent::display);
+    }
+
+    public List<FileSystemComponent> getContent() {
+        return content;
     }
 }

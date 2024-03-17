@@ -12,5 +12,6 @@ public class FileSystemBuilder {
 
     public FileSystemBuilder addFile(String fileName) {
         File file = new File(fileName);
+        return new FileSystemBuilder("root");
     }
 }
