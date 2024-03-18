@@ -30,9 +30,5 @@ public class BuilderTest {
 
         FileSystemComponent txt = folder2.getContent().get(0);
         assertEquals(txt.getName(), "file.txt");
-
-
-
-
     }
 }

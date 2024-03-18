@@ -17,15 +17,18 @@ public class Application {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
 
-            if (line.equals("quit")) {
-                break;
-            } else if (line.equals("print")) {
-                rootFolder.display(0);
-            } else {
-                try {
-                    FileSystemBuilder.buildFileSystem(line, rootFolder);
-                } catch (IllegalArgumentException e) {
-                    System.err.println("Input line is invalid, try again");
+            switch (line) {
+                case "quit":
+                    System.exit(0);
+                    break;
+                case "print":
+                    rootFolder.display(0);
+                    break;
+                default:
+                    try {
+                        FileSystemBuilder.buildFileSystem(line, rootFolder);
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Input line is invalid, try again");
                 }
             }
         }
