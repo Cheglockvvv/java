@@ -6,8 +6,10 @@ import by.verabei.filesystem.Folder;
 import java.util.Scanner;
 
 public class Application {
+    private static final String ROOT_FOLDER_NAME = "root";
     public static void main(String[] args) {
-        Folder rootFolder = new Folder("root");
+
+        Folder rootFolder = new Folder(ROOT_FOLDER_NAME);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter path to add. \nYour root folder name is " +
                 rootFolder.getName() +

@@ -5,30 +5,24 @@ import by.verabei.filesystem.FileSystemComponent;
 import by.verabei.filesystem.Folder;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileSystemBuilder {
     public static FileSystemComponent buildFileSystem(String input, Folder root) throws IllegalArgumentException {
-        List<String> components = new ArrayList<>(List.of(input.split("/")));
-        Folder saveRootFolder = new Folder(root);
-        Folder currentFolder = root;
+        String regex = "^" + root.getName() + "(?:/[^/.]+)+(?:\\.[^/]+)?$"; // "^root(?:/[^/.]+)+(?:\\.[^/.]+)?$"
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
 
-        if (!components.get(0).equals("root")) {
-            throw new IllegalArgumentException();
-        }
+        List<String> components = new ArrayList<>(List.of(input.split("/")));
+        Folder currentFolder = root;
 
         for (int i = 1; i < components.size(); i++) {
             String componentName = components.get(i);
-            if (componentName.isEmpty()) {
-                continue;
-            }
 
              if (currentFolder.getContent().stream()
                     .noneMatch(component1 -> componentName.equals(component1.getName()))) {
                 if (componentName.contains(".")) {
-                    if (i != components.size() - 1) {
-                        root = saveRootFolder;
-                        throw new IllegalArgumentException();
-                    }
                     currentFolder.addComponent(new File(componentName));
                 } else {
                     Folder folder = new Folder(componentName);
