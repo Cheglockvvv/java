@@ -7,5 +7,5 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShopServlet extends HttpServlet {
-
+    
 }

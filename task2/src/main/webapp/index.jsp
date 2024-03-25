@@ -1,15 +1,13 @@
-<form name="bmiForm" action="calculateServlet" method="POST">
-    <table>
-        <tr>
-            <td>Your Weight (kg) :</td>
-            <td><input type="text" name="weight"/></td>
-        </tr>
-        <tr>
-            <td>Your Height (m) :</td>
-            <td><input type="text" name="height"/></td>
-        </tr>
-        <th><input type="submit" value="Submit" name="find"/></th>
-        <th><input type="reset" value="Reset" name="reset" /></th>
-    </table>
-    <h2>${bmi}</h2>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Магазин</title>
+</head>
+<body>
+<h2>Добро пожаловать в магазин!</h2>
+<form action="store" method="post">
+    Введите ваше имя: <input type="text" name="username">
+    <input type="submit" value="Enter">
 </form>
+</body>
+</html>
