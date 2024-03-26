@@ -11,6 +11,16 @@
     <title>Title</title>
 </head>
 <body>
-
+<h2>Hello <%=request.getParameter("username")%></h2>
+<form action="final.jsp" method="POST">
+    <h4>Make your order</h4>
+    <label>
+        <select name="goods" multiple>
+            <option value="first"></option>
+            <option value="second">second</option>
+        </select>
+    </label>
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>
