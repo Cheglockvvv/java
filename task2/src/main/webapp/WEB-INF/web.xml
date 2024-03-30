@@ -17,4 +17,15 @@
     <servlet-name>selectServlet</servlet-name>
     <url-pattern>/data</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>receiptServlet</servlet-name>
+    <servlet-class>com.vorobey.servlet.ReceiptServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>receiptServlet</servlet-name>
+    <url-pattern>/receipt</url-pattern>
+  </servlet-mapping>
+
 </web-app>

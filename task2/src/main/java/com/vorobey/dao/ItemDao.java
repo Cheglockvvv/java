@@ -60,7 +60,6 @@ public class ItemDao {
     }
 
     public List<ItemEntity> findById(List<Long> idList) throws SQLException {
-        Collections.sort(idList);
         int size = idList.size();
         Connection connection = null;
         PreparedStatement statement = null;

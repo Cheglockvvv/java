@@ -17,7 +17,7 @@ public class SelectServlet extends HttpServlet {
         var itemDao = ItemDao.getInstance();
         List<ItemEntity> entityList = itemDao.findAll();
         req.setAttribute("entityList", entityList);
-
+        req.getSession().setAttribute("username", req.getParameter("username"));
         RequestDispatcher dispatcher = req.getRequestDispatcher("/second.jsp");
         dispatcher.forward(req, resp);
     }
