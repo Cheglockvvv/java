@@ -10,13 +10,16 @@ public class ConnectionUtil {
     private static final String USERNAME_KEY = "db.username";
     private static final String PASSWORD_KEY = "db.password";
 
-    private ConnectionUtil() {}
-    public static Connection get() {
+    static {
         try {
-            Class.forName("org.h2.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private ConnectionUtil() {}
+    public static Connection get() {
         try {
              return DriverManager.getConnection(
                      PropertiesUtil.get(URL_KEY),

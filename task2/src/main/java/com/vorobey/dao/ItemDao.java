@@ -3,34 +3,22 @@ package com.vorobey.dao;
 import com.vorobey.entity.ItemEntity;
 import com.vorobey.util.ConnectionUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ItemDao {
     private static final ItemDao INSTANCE = new ItemDao();
-
-//    private static final String CREATE_SQL = "CREATE TABLE IF NOT EXISTS item("
-//                + "id BIGINT AUTO_INCREMENT PRIMARY KEY,"
-//                + "name VARCHAR(128) NOT NULL,"
-//                + "cost DECIMAL(5,2) NOT NULL);";
-
     private static final String CREATE_SQL = """
             CREATE TABLE item(
-                id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                id BIGSERIAL PRIMARY KEY,
                 name VARCHAR(128) NOT NULL,
                 cost DECIMAL(5,2) NOT NULL);
             """;
-
-//    private static final String INSERT_SQL = "INSERT INTO item VALUES"
-//            + "('carrot', 10),"
-//            + "('potato', 15),"
-//            + "('apple', 20),"
-//            + "('banana', 7);";
-
     private static final String INSERT_SQL = """
-            INSERT INTO item
+            INSERT INTO item (name, cost)
             VALUES
             ('carrot', 10),
             ('potato', 15),
@@ -38,7 +26,7 @@ public class ItemDao {
             ('banana', 7);
             """;
 
-    private static final String FIND_ALL_SQL = "SELECT id, name, cost FROM table";
+    private static final String FIND_ALL_SQL = "SELECT id, name, cost FROM item";
 
     private static final String FIND_BY_ID = FIND_ALL_SQL + "WHERE id = ?";
 
@@ -50,12 +38,8 @@ public class ItemDao {
         try (var connection = ConnectionUtil.get();
              var createStatement = connection.prepareStatement(CREATE_SQL);
              var insertStatement = connection.prepareStatement(INSERT_SQL)) {
-
-            connection.setAutoCommit(false);
             createStatement.executeUpdate();
             insertStatement.executeUpdate();
-
-            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -73,9 +57,49 @@ public class ItemDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
+    public List<ItemEntity> findById(List<Long> idList) throws SQLException {
+        Collections.sort(idList);
+        int size = idList.size();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionUtil.get();
+            StringBuilder sql = new StringBuilder("SELECT * FROM item WHERE id IN (");
+            for (int i = 0; i < size; i++) {
+                if (i > 0) {
+                    sql.append(", ");
+                }
+                sql.append("?");
+            }
+            sql.append(")");
+
+            statement = connection.prepareStatement(sql.toString());
+
+            for (int i = 0; i < size; i++) {
+                statement.setLong(i, idList.get(i));
+            }
+
+            var resultSet = statement.executeQuery();
+            List<ItemEntity> itemEntities = new ArrayList<>();
+            while (resultSet.next()) {
+                itemEntities.add(buildItem(resultSet));
+            }
+
+            return itemEntities;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
 
     public ItemEntity buildItem(ResultSet resultSet) throws SQLException {
         return new ItemEntity(
