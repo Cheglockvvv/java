@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.vorobey.entity.ItemEntity" %><%--
   Created by IntelliJ IDEA.
   User: cheglockvvv
   Date: 25.03.24
@@ -11,13 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-<h2>Hello <%=request.getParameter("username")%></h2>
-<form action="final.jsp" method="POST">
+<h2>Hello <c:out value="${username}"/> </h2>
+<form action="final.jsp" method="POST" style="width:200px">
     <h4>Make your order</h4>
     <label>
-        <select name="goods" multiple>
-            <option value="first"></option>
-            <option value="second">second</option>
+        <select style="width: 200px" name="goods" multiple>
+            <c:forEach var="item" items="${entityList}">
+                <option value="${item.id}">${item.name} ${item.cost}$</option>
+            </c:forEach>
         </select>
     </label>
     <input type="submit" value="Submit">

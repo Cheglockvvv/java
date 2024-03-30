@@ -12,7 +12,12 @@ public class ConnectionUtil {
 
     private ConnectionUtil() {}
     public static Connection get() {
-         try {
+        try {
+            Class.forName("org.h2.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
              return DriverManager.getConnection(
                      PropertiesUtil.get(URL_KEY),
                      PropertiesUtil.get(USERNAME_KEY),

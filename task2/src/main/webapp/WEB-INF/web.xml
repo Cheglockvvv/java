@@ -5,4 +5,13 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
+  <servlet>
+    <servlet-name>dataServlet</servlet-name>
+    <servlet-class>com.vorobey.servlet.DataServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>dataServlet</servlet-name>
+    <url-pattern>/data</url-pattern>
+  </servlet-mapping>
 </web-app>
