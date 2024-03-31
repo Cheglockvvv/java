@@ -7,9 +7,12 @@
 <body>
     <h2>Dear <c:out value="${sessionScope.username}"/>, your order:</h2>
     <ol>
-        <c:forEach var="item" items="${paramValues.selectedOptions}">
-            <li>${item}</li>
+        <c:forEach var="item" items="${requestScope.chosen}">
+            <li>${item.name} ${item.cost}$</li>
         </c:forEach>
     </ol>
+    <p>
+        Total: <c:out value="${requestScope.total}$"/>
+    </p>
 </body>
 </html>

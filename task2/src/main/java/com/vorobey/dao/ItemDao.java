@@ -76,8 +76,8 @@ public class ItemDao {
 
             statement = connection.prepareStatement(sql.toString());
 
-            for (int i = 0; i < size; i++) {
-                statement.setLong(i, idList.get(i));
+            for (int i = 1; i <= size; i++) {
+                statement.setLong(i, idList.get(i - 1));
             }
 
             var resultSet = statement.executeQuery();
@@ -104,7 +104,7 @@ public class ItemDao {
         return new ItemEntity(
                 resultSet.getLong("id"),
                 resultSet.getString("name"),
-                resultSet.getBigDecimal("cost")
+                resultSet.getDouble("cost")
         );
     }
 

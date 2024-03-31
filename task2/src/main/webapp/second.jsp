@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>Hello <c:out value="${param.username}"/>!</h2>
-<form action="final.jsp" method="POST">
+<form action="/task2/receipt" method="POST">
     <h4>Make your order</h4>
     <label>
         <select style="width: 200px" name="goods" multiple>

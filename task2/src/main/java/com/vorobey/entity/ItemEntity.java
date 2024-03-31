@@ -14,5 +14,5 @@ import java.math.BigDecimal;
 public class ItemEntity {
     private Long id;
     private String name;
-    private BigDecimal cost;
+    private Double cost;
 }
