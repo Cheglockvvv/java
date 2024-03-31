@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemEntity {
-    private int id;
+    private Long id;
     private String name;
-    private BigDecimal cost;
+    private Double cost;
 }
