@@ -1,1 +1,1 @@
-# innowise-java-internship
+# java-internship
