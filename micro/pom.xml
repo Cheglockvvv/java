@@ -16,11 +16,11 @@
     </properties>
 
     <modules>
-        <module>eureka-server</module>
-        <module>eureka-client</module>
-        <module>eureka-client-2</module>
-        <module>api-gateway</module>
-        <module>github-config-server</module>
+        <module>discovery-service</module>
+        <module>gateway-service</module>
+        <module>config-service</module>
+        <module>user-service</module>
+        <module>product-service</module>
     </modules>
 
 </project>
