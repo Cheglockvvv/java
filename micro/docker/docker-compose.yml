@@ -1,29 +1,28 @@
 version: '2.1'
 services:
-  database:
-    image: postgres:latest
-    ports:
-      - "5432:5432"
+  postgresql_db:
+    image: postgres:15
+    volumes:
+      - postgresql_db:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: "micro_dev"
-    networks:
-      backend:
-        aliases:
-          - "database"
+      POSTGRES_DB: postgresql_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5431:5432" 
+
   keycloak:
-    image: bitnami/keycloak
-    restart: always
+    image: quay.io/keycloak/keycloak:24.0
     environment:
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgresql_db/postgresql_db
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
     ports:
-      - "8080:8080"
-    networks:
-      backend:
-        aliases:
-          - "keycloak"
-networks:
-   backend:
-     driver: bridge
+      - "9090:8080"
+    command:
+      - start-dev
+volumes:
+  postgresql_db:
