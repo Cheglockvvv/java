@@ -1,6 +1,7 @@
 package com.vorobey.orderservice.controller;
 
 import com.vorobey.orderservice.entity.OrderEntity;
+import com.vorobey.orderservice.entity.OrderStatus;
 import com.vorobey.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +31,8 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public OrderEntity updateOrder(@PathVariable Long id, @RequestBody OrderEntity orderEntity) {
-        return orderService.updateOrder(id, orderEntity);
+    public OrderEntity updateOrderStatus(@PathVariable Long id, @RequestBody OrderStatus orderStatus) {
+        return orderService.updateOrderStatus(id, orderStatus);
     }
 
     @DeleteMapping("/{id}")

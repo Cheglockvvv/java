@@ -1,6 +1,7 @@
 package com.vorobey.orderservice.service;
 
 import com.vorobey.orderservice.entity.OrderEntity;
+import com.vorobey.orderservice.entity.OrderStatus;
 import com.vorobey.orderservice.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,10 @@ public class OrderService {
         }
     }
 
-    public OrderEntity updateOrder(Long id, OrderEntity orderEntity) {
-        OrderEntity orderEntityToUpdate = getOrderById(id);
-        orderEntityToUpdate.setCreatedDate(orderEntity.getCreatedDate());
-        orderEntityToUpdate.setStatus(orderEntity.getStatus());
+    public OrderEntity updateOrderStatus(Long id, OrderStatus status) {
+        OrderEntity orderEntityToUpdate = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order with id " + id + " not found"));
+        orderEntityToUpdate.setStatus(status);
         return orderRepository.save(orderEntityToUpdate);
     }
 
