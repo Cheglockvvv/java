@@ -24,12 +24,8 @@ public class OrderService {
     }
 
     public OrderEntity getOrderById(Long id) {
-        Optional<OrderEntity> orderEntityOptional = orderRepository.findById(id);
-        if (orderEntityOptional.isPresent()) {
-            return orderEntityOptional.get();
-        } else {
-            throw new RuntimeException("Order with id " + id + " not found");
-        }
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order with id " + id + " not found"));
     }
 
     public OrderEntity updateOrderStatus(Long id, OrderStatus status) {
