@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface InventoryService {
     List<InventoryEntity> getAllInventoryItems();
-    Map<Long, Integer> getProductStock(Long productId);
+    Map<Long, Integer> getProductStock();
     InventoryEntity updateInventoryItem(Long productId, Integer newQuantity);
     InventoryEntity addInventoryItem(InventoryEntity inventoryEntity);
     void deleteInventoryItem(Long id);

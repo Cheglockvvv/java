@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InventoryServiceImpl implements InventoryService{
@@ -21,8 +22,9 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public Map<Long, Integer> getProductStock(Long productId) {
-        return Map.of();
+    public Map<Long, Integer> getProductStock() {
+        return inventoryRepository.findAll().stream()
+                .collect(Collectors.toMap(InventoryEntity::getProductId, InventoryEntity::getQuantity));
     }
 
     @Override
