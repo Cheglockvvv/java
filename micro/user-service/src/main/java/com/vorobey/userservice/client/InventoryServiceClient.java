@@ -5,15 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 @Component
-public class ProductServiceClient {
+public class InventoryServiceClient {
     @Autowired
-    public RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
-    public List<ProductEntity> getAllProducts() {
-        return restTemplate.getForObject("http://product-service/products", List.class);
+    public Map<Long, Integer> getProductStock() {
+        return restTemplate.getForObject("http://inventory-service/inventory/stock", Map.class);
     }
 }
