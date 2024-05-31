@@ -2,6 +2,8 @@ package com.vorobey.userservice.client;
 
 import com.vorobey.productservice.entity.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,7 +14,15 @@ public class InventoryServiceClient {
     @Autowired
     private RestTemplate restTemplate;
 
+    private final String gatewayUrl = "http://localhost:8765/inventory-service";
+
     public Map<Long, Integer> getProductStock() {
-        return restTemplate.getForObject("http://inventory-service/inventory/stock", Map.class);
+        String url = gatewayUrl + "/inventory/stocks";
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<Map<Long, Integer>>() {}
+        ).getBody();
     }
 }
