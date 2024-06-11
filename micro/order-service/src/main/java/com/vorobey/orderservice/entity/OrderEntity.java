@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Data
@@ -15,6 +14,7 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long cost;
     private LocalDate createdDate;
     private OrderStatus status;
 }

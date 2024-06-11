@@ -14,6 +14,7 @@ public class InventoryServiceClient {
     @Autowired
     private RestTemplate restTemplate;
 
+    //TODO change port and url into a property file or git
     private final String gatewayUrl = "http://localhost:8765/inventory-service";
 
     public Map<Long, Integer> getProductStock() {
