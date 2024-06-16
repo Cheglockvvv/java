@@ -1,7 +1,7 @@
 package com.vorobey.userservice.controller;
 
+import com.vorobey.userservice.cart.CartItem;
 import com.vorobey.userservice.service.UserService;
-import com.vorobey.userservice.util.ProductWithStock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addToCart(@RequestBody ProductWithStock productWithStock) {
+    public String addToCart(@RequestBody CartItem cartItem) {
         return "empty";
     }
 
