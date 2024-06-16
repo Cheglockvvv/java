@@ -5,5 +5,5 @@ import com.vorobey.userservice.util.ProductWithStock;
 import java.util.List;
 
 public interface UserService {
-    List<ProductWithStock> getAllProductsWithStock();
+    //List<ProductWithStock> getAllProductsWithStock();
 }

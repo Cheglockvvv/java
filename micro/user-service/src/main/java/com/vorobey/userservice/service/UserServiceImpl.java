@@ -14,19 +14,19 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService{
 
-    @Autowired
-    private InventoryServiceClient inventoryServiceClient;
+//    @Autowired
+//    private InventoryServiceClient inventoryServiceClient;
 
-    @Autowired
-    private ProductServiceClient productServiceClient;
-
-    @Override
-    public List<ProductWithStock> getAllProductsWithStock() {
-        List<ProductEntity> availableProducts = productServiceClient.getAllProducts();
-        Map<Long, Integer> productStock = inventoryServiceClient.getProductStock();
-
-        return availableProducts.stream()
-                .map(product -> new ProductWithStock(product, productStock.getOrDefault(product.getId(), 0)))
-                .collect(Collectors.toList());
-    }
+//    @Autowired
+//    private ProductServiceClient productServiceClient;
+//
+//    @Override
+//    public List<ProductWithStock> getAllProductsWithStock() {
+//        List<ProductEntity> availableProducts = productServiceClient.getAllProducts();
+//        Map<Long, Integer> productStock = inventoryServiceClient.getProductStock();
+//
+//        return availableProducts.stream()
+//                .map(product -> new ProductWithStock(product, productStock.getOrDefault(product.getId(), 0)))
+//                .collect(Collectors.toList());
+//    }
 }
