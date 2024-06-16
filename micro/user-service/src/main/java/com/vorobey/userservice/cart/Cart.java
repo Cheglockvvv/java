@@ -1,10 +1,12 @@
 package com.vorobey.userservice.cart;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
 public class Cart {
     @Id
