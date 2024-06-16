@@ -3,7 +3,6 @@ package com.vorobey.userservice.service;
 import com.vorobey.productservice.entity.ProductEntity;
 import com.vorobey.userservice.client.InventoryServiceClient;
 import com.vorobey.userservice.client.ProductServiceClient;
-import com.vorobey.userservice.util.ProductWithStock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
