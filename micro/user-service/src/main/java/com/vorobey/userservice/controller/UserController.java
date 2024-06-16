@@ -3,9 +3,7 @@ package com.vorobey.userservice.controller;
 import com.vorobey.userservice.service.UserService;
 import com.vorobey.userservice.util.ProductWithStock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,8 +19,13 @@ public class UserController {
         return "instruments";
     }
 
-    @GetMapping("/products")
-    public List<ProductWithStock> getAllProductWithStock() {
-        return userService.getAllProductsWithStock();
+    @PostMapping("/add")
+    public String addToCart(@RequestBody ProductWithStock productWithStock) {
+        return "empty";
     }
+
+//    @GetMapping("/products")
+//    public List<ProductWithStock> getAllProductWithStock() {
+//        return userService.getAllProductsWithStock();
+//    }
 }
