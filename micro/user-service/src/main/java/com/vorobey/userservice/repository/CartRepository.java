@@ -1,4 +1,4 @@
-package repository;
+package com.vorobey.userservice.repository;
 
 import com.vorobey.userservice.cart.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
