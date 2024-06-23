@@ -35,7 +35,6 @@ public class Cart implements Serializable {
     public void removeItem(Long productId) {
         CartItem currentCartItem = items.get(productId);
         if (currentCartItem != null) {
-            Integer currentQuantity = currentCartItem.getQuantity();
             items.remove(productId);
         }
     }
