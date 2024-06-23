@@ -37,11 +37,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void removeFromCart(Long userId, CartItem cartItem) {
-
+        String cartKey = CART_PREFIX + userId.toString();
+        Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
+        if (cart != null) {
+            cart.removeItem(cartItem);
+            redisTemplate.opsForValue().set(cartKey, cart, 1, TimeUnit.DAYS);
+        }
     }
 
     @Override
     public void clearCart(Long userId) {
-
+        String cartKey = CART_PREFIX + userId.toString();
+        Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
+        if (cart != null) {
+            redisTemplate.delete(cartKey);
+        }
     }
 }
