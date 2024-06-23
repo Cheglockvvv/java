@@ -1,11 +1,12 @@
 package com.vorobey.userservice.controller;
 
+import com.vorobey.userservice.cart.Cart;
+import com.vorobey.userservice.cart.CartItem;
 import com.vorobey.userservice.service.UserService;
-import com.vorobey.userservice.util.ProductWithStock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,8 +22,14 @@ public class UserController {
         return "instruments";
     }
 
-    @GetMapping("/products")
-    public List<ProductWithStock> getAllProductWithStock() {
-        return userService.getAllProductsWithStock();
+    @PostMapping("/add")
+    public ResponseEntity<Cart> addToCart(@RequestParam Long userId, @RequestBody CartItem cartItem) {
+        Cart cart = userService.addToCart(userId, cartItem.getProductId(), cartItem.getQuantity());
+        return new ResponseEntity<>(cart, HttpStatus.OK);
     }
+
+//    @GetMapping("/products")
+//    public List<ProductWithStock> getAllProductWithStock() {
+//        return userService.getAllProductsWithStock();
+//    }
 }
