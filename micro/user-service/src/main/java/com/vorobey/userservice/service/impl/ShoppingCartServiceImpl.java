@@ -4,6 +4,7 @@ import com.vorobey.userservice.cart.Cart;
 import com.vorobey.userservice.cart.CartItem;
 import com.vorobey.userservice.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private static final String CART_PREFIX = "cart:";
     private final RedisTemplate<String, Object> redisTemplate;
@@ -26,6 +28,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         cart.addItem(cartItem);
         redisTemplate.opsForValue().set(cartKey, cart, 1, TimeUnit.DAYS);
+        log.info("Item was added to cart successfully : {}", cartItem);
     }
 
     @Override
@@ -42,6 +45,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (cart != null) {
             cart.removeItem(productId);
             redisTemplate.opsForValue().set(cartKey, cart, 1, TimeUnit.DAYS);
+            log.info("Item was removed from cart successfully : {}", cartKey);
+        } else {
+            log.info("Item was not removed from cart : {} does not exist", cartKey);
         }
     }
 
@@ -51,6 +57,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
         if (cart != null) {
             redisTemplate.delete(cartKey);
+            log.info("cart was cleared successfully : {}", cartKey);
         }
     }
 }
