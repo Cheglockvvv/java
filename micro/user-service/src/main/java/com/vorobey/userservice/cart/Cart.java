@@ -32,17 +32,11 @@ public class Cart implements Serializable {
         }
     }
 
-    public void removeItem(CartItem item) {
-        CartItem currentCartItem = items.get(item.getProductId());
+    public void removeItem(Long productId) {
+        CartItem currentCartItem = items.get(productId);
         if (currentCartItem != null) {
             Integer currentQuantity = currentCartItem.getQuantity();
-            int delta = currentQuantity - item.getQuantity();
-            if (delta <= 0) {
-                items.remove(item.getProductId());
-            } else {
-                currentCartItem.setQuantity(delta);
-                items.put(item.getProductId(), currentCartItem);
-            }
+            items.remove(productId);
         }
     }
 }
