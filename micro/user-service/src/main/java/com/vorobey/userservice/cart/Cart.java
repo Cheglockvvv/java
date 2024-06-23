@@ -15,4 +15,16 @@ import java.util.List;
 public class Cart implements Serializable {
     private Long userId;
     private List<CartItem> items = new ArrayList<>();
+
+    public Cart(Long userId) {
+        this.userId = userId;
+    }
+
+    public void addItem(CartItem item) {
+        items.add(item);
+    }
+
+    public void removeItem(CartItem item) {
+        items.remove(item);
+    }
 }
