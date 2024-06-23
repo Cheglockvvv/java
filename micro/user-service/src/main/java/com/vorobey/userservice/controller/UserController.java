@@ -23,13 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Cart> addToCart(@RequestParam Long userId, @RequestBody CartItem cartItem) {
-        Cart cart = userService.addToCart(userId, cartItem.getProductId(), cartItem.getQuantity());
-        return new ResponseEntity<>(cart, HttpStatus.OK);
+    public ResponseEntity<String> addToCart(@RequestParam Long userId, @RequestBody CartItem cartItem) {
+        return new ResponseEntity<>("hello", HttpStatus.OK);
     }
-
-//    @GetMapping("/products")
-//    public List<ProductWithStock> getAllProductWithStock() {
-//        return userService.getAllProductsWithStock();
-//    }
 }
