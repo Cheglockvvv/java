@@ -14,7 +14,7 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cart implements Serializable {
+public class Cart {
     private Long userId;
     private Map<Long, CartItem> items = new HashMap<>();
 
