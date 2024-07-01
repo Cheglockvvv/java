@@ -32,10 +32,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Optional<Cart> getCart(Long userId) {
+    public Cart getCart(Long userId) {
         String cartKey = CART_PREFIX + userId.toString();
-        Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
-        return Optional.ofNullable(cart);
+        return (Cart) redisTemplate.opsForValue().get(cartKey);
     }
 
     @Override
