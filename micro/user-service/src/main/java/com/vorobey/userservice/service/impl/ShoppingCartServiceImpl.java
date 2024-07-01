@@ -6,6 +6,7 @@ import com.vorobey.userservice.exception.CartNotFoundException;
 import com.vorobey.userservice.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private static final String CART_PREFIX = "cart:";
     private final RedisTemplate<String, Object> redisTemplate;
-
 
     @Override
     public void addToCart(Long userId, CartItem cartItem) {
@@ -33,7 +33,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Cacheable(value = "carts")
     public Cart getCart(Long userId) {
+        log.info("getting cart by user id:");
         String cartKey = CART_PREFIX + userId.toString();
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
         if (cart == null) {
