@@ -22,6 +22,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void addToCart(Long userId, CartItem cartItem) {
+        log.info("adding item to cart");
         String cartKey = CART_PREFIX + userId.toString();
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
         if (cart == null) {
@@ -41,11 +42,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (cart == null) {
             throw new CartNotFoundException("Cart not found. Can't get cart.");
         }
+        log.info("Cart found: {}", cart);
         return cart;
     }
 
     @Override
     public void removeFromCart(Long userId, Long productId) {
+        log.info("removing item from cart");
         String cartKey = CART_PREFIX + userId.toString();
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
         if (cart == null) {
@@ -58,6 +61,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void clearCart(Long userId) {
+        log.info("clearing cart by user id:");
         String cartKey = CART_PREFIX + userId.toString();
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
         if (cart == null) {
