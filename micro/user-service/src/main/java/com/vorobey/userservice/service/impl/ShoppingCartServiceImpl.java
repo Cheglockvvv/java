@@ -2,6 +2,7 @@ package com.vorobey.userservice.service.impl;
 
 import com.vorobey.userservice.cart.Cart;
 import com.vorobey.userservice.cart.CartItem;
+import com.vorobey.userservice.exception.CartNotFoundException;
 import com.vorobey.userservice.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,29 +35,33 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public Cart getCart(Long userId) {
         String cartKey = CART_PREFIX + userId.toString();
-        return (Cart) redisTemplate.opsForValue().get(cartKey);
+        Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
+        if (cart == null) {
+            throw new CartNotFoundException("Cart not found. Can't get cart.");
+        }
+        return cart;
     }
 
     @Override
     public void removeFromCart(Long userId, Long productId) {
         String cartKey = CART_PREFIX + userId.toString();
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
-        if (cart != null) {
-            cart.removeItem(productId);
-            redisTemplate.opsForValue().set(cartKey, cart, 1, TimeUnit.DAYS);
-            log.info("Item was removed from cart successfully : {}", cartKey);
-        } else {
-            log.info("Item was not removed from cart : {} does not exist", cartKey);
+        if (cart == null) {
+            throw new CartNotFoundException("Cart not found. Item is not removed");
         }
+        cart.removeItem(productId);
+        redisTemplate.opsForValue().set(cartKey, cart, 1, TimeUnit.DAYS);
+        log.info("Item was removed from cart successfully : {}", cartKey);
     }
 
     @Override
     public void clearCart(Long userId) {
         String cartKey = CART_PREFIX + userId.toString();
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
-        if (cart != null) {
-            redisTemplate.delete(cartKey);
-            log.info("cart was cleared successfully : {}", cartKey);
+        if (cart == null) {
+            throw new CartNotFoundException("Cart not found. Can't clear cart.");
         }
+        redisTemplate.delete(cartKey);
+        log.info("cart was cleared successfully : {}", cartKey);
     }
 }

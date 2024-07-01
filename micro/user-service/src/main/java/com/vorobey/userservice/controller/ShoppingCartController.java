@@ -25,9 +25,6 @@ public class ShoppingCartController {
     @GetMapping
     public ResponseEntity<Cart> getCart(@RequestParam Long userId) {
         Cart cart = shoppingCartService.getCart(userId);
-        if (cart == null) {
-            throw new CartNotFoundException("Cart for user with ID " + userId + " not found");
-        }
         return ResponseEntity.ok(cart);
     }
 
