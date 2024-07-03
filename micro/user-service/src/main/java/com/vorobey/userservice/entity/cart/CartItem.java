@@ -1,4 +1,4 @@
-package com.vorobey.userservice.cart;
+package com.vorobey.userservice.entity.cart;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
