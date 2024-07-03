@@ -1,4 +1,4 @@
-package com.vorobey.userservice.cart;
+package com.vorobey.userservice.entity.cart.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,13 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
+@Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class CartItem implements Serializable {
+@NoArgsConstructor
+public class User {
 
-    private Long productId;
-    private Integer quantity;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+    private String password;
 }

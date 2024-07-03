@@ -1,15 +1,12 @@
 package com.vorobey.userservice.controller;
 
-import com.vorobey.userservice.cart.Cart;
-import com.vorobey.userservice.cart.CartItem;
-import com.vorobey.userservice.exception.CartNotFoundException;
+import com.vorobey.userservice.entity.cart.Cart;
+import com.vorobey.userservice.entity.cart.CartItem;
 import com.vorobey.userservice.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/cart")

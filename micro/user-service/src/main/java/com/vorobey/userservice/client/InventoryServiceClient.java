@@ -1,6 +1,7 @@
 package com.vorobey.userservice.client;
 
 import com.vorobey.productservice.entity.ProductEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -10,9 +11,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class InventoryServiceClient {
-    @Autowired
-    private RestTemplate restTemplate;
+
+    private final RestTemplate restTemplate;
 
     //TODO change port and url into a property file or git
     private final String gatewayUrl = "http://localhost:8765/inventory-service";

@@ -1,14 +1,10 @@
-package com.vorobey.userservice.cart;
+package com.vorobey.userservice.entity.cart;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Data
@@ -22,6 +18,7 @@ public class Cart {
         this.userId = userId;
     }
 
+    // TODO: remove these two methods to service methods
     public void addItem(CartItem item) {
         CartItem currentCartItem = items.get(item.getProductId());
         if (currentCartItem == null) {
