@@ -1,13 +1,9 @@
 package com.vorobey.userservice.service;
 
-import com.vorobey.userservice.cart.Cart;
-import com.vorobey.userservice.cart.CartItem;
-import lombok.RequiredArgsConstructor;
+import com.vorobey.userservice.entity.cart.CartItem;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.HashMap;
 
 @Slf4j
 public class ShoppingCartServiceTests {

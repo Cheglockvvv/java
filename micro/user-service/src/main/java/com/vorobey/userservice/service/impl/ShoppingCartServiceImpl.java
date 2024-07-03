@@ -1,7 +1,7 @@
 package com.vorobey.userservice.service.impl;
 
-import com.vorobey.userservice.cart.Cart;
-import com.vorobey.userservice.cart.CartItem;
+import com.vorobey.userservice.entity.cart.Cart;
+import com.vorobey.userservice.entity.cart.CartItem;
 import com.vorobey.userservice.exception.CartNotFoundException;
 import com.vorobey.userservice.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service

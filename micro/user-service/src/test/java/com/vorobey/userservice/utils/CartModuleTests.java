@@ -1,8 +1,7 @@
 package com.vorobey.userservice.utils;
 
-import com.vorobey.userservice.cart.Cart;
-import com.vorobey.userservice.cart.CartItem;
-import org.checkerframework.checker.units.qual.C;
+import com.vorobey.userservice.entity.cart.Cart;
+import com.vorobey.userservice.entity.cart.CartItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

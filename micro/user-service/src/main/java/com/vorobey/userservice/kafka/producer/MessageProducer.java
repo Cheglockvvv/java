@@ -1,6 +1,6 @@
 package com.vorobey.userservice.kafka.producer;
 
-import com.vorobey.userservice.cart.Cart;
+import com.vorobey.userservice.entity.cart.Cart;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -16,4 +16,5 @@ public class MessageProducer {
     public void sendInventoryRequest(Long userId, Cart cart) {
         kafkaTemplate.send(INVENTORY_TOPIC, userId.toString(), cart);
     }
+
 }
