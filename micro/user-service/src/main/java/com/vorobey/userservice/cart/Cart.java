@@ -22,6 +22,7 @@ public class Cart {
         this.userId = userId;
     }
 
+    // TODO: remove these two methods to service methods
     public void addItem(CartItem item) {
         CartItem currentCartItem = items.get(item.getProductId());
         if (currentCartItem == null) {
