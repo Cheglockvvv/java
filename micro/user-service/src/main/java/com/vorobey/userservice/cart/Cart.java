@@ -14,7 +14,7 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cart implements Serializable {
+public class Cart {
     private Long userId;
     private Map<Long, CartItem> items = new HashMap<>();
 
@@ -22,6 +22,7 @@ public class Cart implements Serializable {
         this.userId = userId;
     }
 
+    // TODO: remove these two methods to service methods
     public void addItem(CartItem item) {
         CartItem currentCartItem = items.get(item.getProductId());
         if (currentCartItem == null) {

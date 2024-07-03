@@ -2,6 +2,7 @@ package com.vorobey.userservice.controller;
 
 import com.vorobey.userservice.cart.Cart;
 import com.vorobey.userservice.cart.CartItem;
+import com.vorobey.userservice.exception.CartNotFoundException;
 import com.vorobey.userservice.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class ShoppingCartController {
 
     @GetMapping
     public ResponseEntity<Cart> getCart(@RequestParam Long userId) {
-        Optional<Cart> cartOptional = shoppingCartService.getCart(userId);
-        return cartOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        Cart cart = shoppingCartService.getCart(userId);
+        return ResponseEntity.ok(cart);
     }
 
     @PostMapping("/remove")
