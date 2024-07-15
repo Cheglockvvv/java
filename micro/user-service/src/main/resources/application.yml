@@ -26,7 +26,7 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: userservice
+            client-id: user-service
             client-secret: w6u81iqv8zBjugCLMQkySY8wNQGgow3i
             scope: openid
 
