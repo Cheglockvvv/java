@@ -31,14 +31,11 @@ public class SecurityConfig {
         http.oauth2Login(Customizer.withDefaults());
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(new AntPathRequestMatcher("/user", HttpMethod.OPTIONS))
-                .permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/user"))
-                .hasRole("USER")
-                .requestMatchers(new AntPathRequestMatcher("/"))
-                .permitAll()
-                .anyRequest()
-                .authenticated());
+                .requestMatchers("/error").permitAll()
+                .requestMatchers("/user/hello").permitAll()
+                .requestMatchers("/user/user").hasRole("USER")
+                .requestMatchers("/user/admin").hasRole("ADMIN")
+                .anyRequest().authenticated());
 
         return http.build();
     }
