@@ -12,4 +12,18 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/user")
+    public String test() {
+        return "hello user";
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "hello admin";
+    }
 }
