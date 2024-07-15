@@ -1,5 +1,6 @@
 package com.vorobey.userservice.controller;
 
+import com.vorobey.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserController {
 
-    @GetMapping("/test")
-    public String instruments() {
-        return "instruments";
-    }
+    private final UserService userService;
 
 }
