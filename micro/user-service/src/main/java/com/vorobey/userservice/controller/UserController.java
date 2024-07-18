@@ -3,6 +3,7 @@ package com.vorobey.userservice.controller;
 import com.vorobey.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +14,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/user")
+    @PreAuthorize("hasRole('USER')")
     public String test() {
         return "hello user";
     }
@@ -23,6 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
     public String admin() {
         return "hello admin";
     }
