@@ -1,13 +1,15 @@
 package com.vorobey.userservice.controller;
 
+import com.vorobey.userservice.entity.cart.Cart;
 import com.vorobey.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserController {
 
