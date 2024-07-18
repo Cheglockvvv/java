@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
@@ -33,5 +33,11 @@ public class ShoppingCartController {
     @PostMapping("/clear")
     public void clearCart(@RequestParam Long userId) {
         shoppingCartService.clearCart(userId);
+    }
+
+    @GetMapping("/order")
+    public ResponseEntity<Cart> checkAndMakeOrder(@RequestParam Long userId) {
+        Cart cart = shoppingCartService.checkAndMakeOrder(userId);
+        return ResponseEntity.ok(cart);
     }
 }
