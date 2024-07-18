@@ -1,13 +1,18 @@
 package com.vorobey.userservice.service.impl;
 
+import com.vorobey.userservice.client.InventoryServiceClient;
+import com.vorobey.userservice.client.OrderServiceClient;
 import com.vorobey.userservice.entity.cart.Cart;
 import com.vorobey.userservice.entity.cart.CartItem;
+import com.vorobey.userservice.exception.CartIsEmptyException;
 import com.vorobey.userservice.exception.CartNotFoundException;
+import com.vorobey.userservice.exception.ProductIsNotAvailableException;
 import com.vorobey.userservice.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -17,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private static final String CART_PREFIX = "cart:";
+    private final InventoryServiceClient inventoryServiceClient;
+    private final OrderServiceClient orderServiceClient;
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Override
@@ -39,7 +46,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         String cartKey = CART_PREFIX + userId.toString();
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
         if (cart == null) {
-            throw new CartNotFoundException("Cart not found. Can't get cart.");
+            throw new CartNotFoundException();
         }
         log.info("Cart found: {}", cart);
         return cart;
@@ -51,7 +58,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         String cartKey = CART_PREFIX + userId.toString();
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
         if (cart == null) {
-            throw new CartNotFoundException("Cart not found. Item is not removed");
+            throw new CartNotFoundException();
         }
         cart.removeItem(productId);
         redisTemplate.opsForValue().set(cartKey, cart, 1, TimeUnit.DAYS);
@@ -64,9 +71,30 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         String cartKey = CART_PREFIX + userId.toString();
         Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
         if (cart == null) {
-            throw new CartNotFoundException("Cart not found. Can't clear cart.");
+            throw new CartNotFoundException();
         }
         redisTemplate.delete(cartKey);
         log.info("cart was cleared successfully : {}", cartKey);
+    }
+
+    @Override
+    public String checkAndMakeOrder(Long userId) {
+        log.info("begin making order");
+        String cartKey = CART_PREFIX + userId.toString();
+        Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
+        if (cart == null) {
+            throw new CartNotFoundException();
+        } else if (cart.getItems().isEmpty()) {
+            throw new CartIsEmptyException();
+        }
+
+        ResponseEntity<String> response = inventoryServiceClient.isAvailable(cart);
+        if (response.getStatusCode().is4xxClientError()) {
+            throw new ProductIsNotAvailableException(response.getBody());
+        }
+
+        ResponseEntity<String> responseOrder = orderServiceClient.makeOrder(cart);
+
+        return responseOrder.toString();
     }
 }
