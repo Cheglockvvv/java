@@ -15,8 +15,10 @@ public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
     @PostMapping("/add")
-    public void addToCart(@RequestParam Long userId, @RequestBody CartItem cartItem) {
+    public ResponseEntity<CartItem> addToCart(@RequestParam Long userId,
+                                              @RequestBody CartItem cartItem) {
         shoppingCartService.addToCart(userId, cartItem);
+        return ResponseEntity.ok(cartItem);
     }
 
     @GetMapping
@@ -26,7 +28,8 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/remove")
-    public void removeFromCart(@RequestParam Long userId, @RequestParam Long productId) {
+    public void removeFromCart(@RequestParam Long userId,
+                               @RequestParam Long productId) {
         shoppingCartService.removeFromCart(userId, productId);
     }
 
@@ -36,8 +39,8 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/order")
-    public ResponseEntity<Cart> checkAndMakeOrder(@RequestParam Long userId) {
-        Cart cart = shoppingCartService.checkAndMakeOrder(userId);
-        return ResponseEntity.ok(cart);
+    public ResponseEntity<String> checkAndMakeOrder(@RequestParam Long userId) {
+        String string = shoppingCartService.checkAndMakeOrder(userId);
+        return ResponseEntity.ok(string);
     }
 }
