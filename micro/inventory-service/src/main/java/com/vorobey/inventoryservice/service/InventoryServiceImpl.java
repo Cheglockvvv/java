@@ -1,13 +1,17 @@
 package com.vorobey.inventoryservice.service;
 
 import com.vorobey.inventoryservice.entity.InventoryEntity;
+import com.vorobey.inventoryservice.exception.ProductNotFoundException;
 import com.vorobey.inventoryservice.repository.InventoryRepository;
+import com.vorobey.userservice.entity.cart.Cart;
+import com.vorobey.userservice.entity.cart.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,5 +51,24 @@ public class InventoryServiceImpl implements InventoryService{
     @Override
     public void deleteInventoryItem(Long id) {
         inventoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Boolean isAvailable(Cart cart) {
+        List<CartItem> list = cart.getItems().keySet().stream()
+                .map(id -> cart.getItems().get(id))
+                .toList();
+        for (CartItem cartItem : list) {
+            Optional<InventoryEntity> inventoryEntityOpt = inventoryRepository.findByProductId(cartItem.getProductId());
+            if (inventoryEntityOpt.isPresent()) {
+                if (cartItem.getQuantity() < inventoryEntityOpt.get().getQuantity()) {
+                    return false;
+                }
+            } else {
+                throw new ProductNotFoundException("Product with id: " + cartItem.getProductId() + " not found");
+            }
+        }
+
+        return true;
     }
 }

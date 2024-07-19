@@ -4,13 +4,14 @@ import com.vorobey.orderservice.entity.OrderEntity;
 import com.vorobey.orderservice.entity.OrderStatus;
 import com.vorobey.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/v1/order")
 public class OrderController {
     @Autowired
     private OrderService orderService;
@@ -21,8 +22,9 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderEntity createOrder(@RequestBody OrderEntity orderEntity) {
-        return orderService.createOrder(orderEntity);
+    public ResponseEntity<OrderEntity> createOrder(@RequestBody OrderEntity orderEntity) {
+        OrderEntity entity = orderService.createOrder(orderEntity);
+        return ResponseEntity.ok(entity);
     }
 
     @GetMapping("/{id}")

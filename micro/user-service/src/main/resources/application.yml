@@ -14,11 +14,26 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
   data:
     redis:
       host: localhost
       port: 6379
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/innowise-microservices
+      client:
+        registration:
+          keycloak:
+            client-id: user-service
+            client-secret: w6u81iqv8zBjugCLMQkySY8wNQGgow3i
+            scope: openid
+
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/innowise-microservices
+            user-name-attribute: preferred_username
 
 eureka:
   client:

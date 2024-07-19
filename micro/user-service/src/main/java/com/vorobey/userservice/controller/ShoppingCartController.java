@@ -1,25 +1,24 @@
 package com.vorobey.userservice.controller;
 
-import com.vorobey.userservice.cart.Cart;
-import com.vorobey.userservice.cart.CartItem;
-import com.vorobey.userservice.exception.CartNotFoundException;
+import com.vorobey.userservice.entity.cart.Cart;
+import com.vorobey.userservice.entity.cart.CartItem;
 import com.vorobey.userservice.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
     @PostMapping("/add")
-    public void addToCart(@RequestParam Long userId, @RequestBody CartItem cartItem) {
+    public ResponseEntity<CartItem> addToCart(@RequestParam Long userId,
+                                              @RequestBody CartItem cartItem) {
         shoppingCartService.addToCart(userId, cartItem);
+        return ResponseEntity.ok(cartItem);
     }
 
     @GetMapping
@@ -29,12 +28,19 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/remove")
-    public void removeFromCart(@RequestParam Long userId, @RequestParam Long productId) {
+    public void removeFromCart(@RequestParam Long userId,
+                               @RequestParam Long productId) {
         shoppingCartService.removeFromCart(userId, productId);
     }
 
     @PostMapping("/clear")
     public void clearCart(@RequestParam Long userId) {
         shoppingCartService.clearCart(userId);
+    }
+
+    @GetMapping("/order")
+    public ResponseEntity<String> checkAndMakeOrder(@RequestParam Long userId) {
+        String string = shoppingCartService.checkAndMakeOrder(userId);
+        return ResponseEntity.ok(string);
     }
 }

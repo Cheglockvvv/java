@@ -1,5 +1,11 @@
 package com.vorobey.userservice.service;
 
-public interface UserService {
+import com.vorobey.userservice.entity.user.User;
 
+public interface UserService {
+    User registerUser(User user);
+    User findUserById(Long id);
+    User findUserByUsername(String username);
+    User updateUser(User user);
+    void deleteUserById(Long id);
 }

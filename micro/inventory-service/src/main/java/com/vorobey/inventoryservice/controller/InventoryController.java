@@ -2,14 +2,16 @@ package com.vorobey.inventoryservice.controller;
 
 import com.vorobey.inventoryservice.entity.InventoryEntity;
 import com.vorobey.inventoryservice.service.InventoryService;
+import com.vorobey.userservice.entity.cart.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/inventory")
+@RequestMapping("/api/v1/inventory")
 public class InventoryController {
 
     @Autowired
@@ -39,5 +41,15 @@ public class InventoryController {
     @DeleteMapping("/items/{id}")
     public void deleteInventoryItem(@PathVariable Long id) {
         inventoryService.deleteInventoryItem(id);
+    }
+
+    @PostMapping("/available")
+    public ResponseEntity<String> isAvailable(@RequestBody Cart cart) {
+        if (inventoryService.isAvailable(cart)) {
+            return ResponseEntity.ok("Available");
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }

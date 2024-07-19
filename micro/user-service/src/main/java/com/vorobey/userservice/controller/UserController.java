@@ -1,25 +1,34 @@
 package com.vorobey.userservice.controller;
 
-import com.vorobey.userservice.cart.Cart;
-import com.vorobey.userservice.cart.CartItem;
-import com.vorobey.userservice.service.ShoppingCartService;
+import com.vorobey.userservice.entity.cart.Cart;
 import com.vorobey.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserController {
 
-    @GetMapping("/test")
-    public String instruments() {
-        return "instruments";
+    private final UserService userService;
+
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER')")
+    public String test() {
+        return "hello user";
     }
 
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello";
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String admin() {
+        return "hello admin";
+    }
 }
